@@ -11,7 +11,7 @@ class Imovel extends Model {
 
     static scopeProximidade(query, latitude, longitude, distancia){
         
-        const haversine = `(6371 * acos(cos(raduans(${latitude}))
+        const haversine = `(6371 * acos(cos(radians(${latitude}))
                             * cos(radians(${latitude}))
                             * cos(radians(${longitude})
                             - radians(${longitude}))

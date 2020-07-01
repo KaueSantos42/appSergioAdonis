@@ -42,11 +42,10 @@ class ImovelController {
    */
   async store ({ request, response, auth }) {
 
-    const {id} = auth.user_id;
     const data = request.only(['descricao','endereco','valor','latitude','longitude']);
     
-    data.user_id=auth.user_id;
-
+    data.user_id = auth.user_id;
+    
     const imovel = await Imovel.create(data);
     
     return imovel
@@ -64,12 +63,8 @@ class ImovelController {
   async show ({ params }) {
 
     const imovel = await Imovel.findOrFail(params.id);
-    const data = request.only(['descricao','endereco','valor','latitude','longitude']);
-    
-    imovel.merge(data);
-    await imovel.save();
 
-    return imovel;
+    return imovel
   }
 
 
@@ -84,11 +79,12 @@ class ImovelController {
   async update ({ params, request, response }) {
 
     const imovel = await Imovel.findOrFail(params.id);
-
-
-
-    return imovel
-
+    const data = request.only(['descricao','endereco','valor','latitude','longitude']);
+    
+    imovel.merge(data);
+    await imovel.save();
+    
+    return imovel;
   }
 
   /**
