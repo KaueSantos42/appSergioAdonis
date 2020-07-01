@@ -22,16 +22,6 @@ Route.get('/', () => {
   return { greeting: 'Pagina Home' }
 });
 
-Route.get('/usuarios', function()  {
-  return 'Get nos Usuarios';
-});
-
-Route.get('/tokens', function()  {
-  return 'Get nos tokens';
-});
-
-
-
 Route.post('/usuarios', 'UserController.create');
 Route.post('/token', 'SessionController.create');
 
