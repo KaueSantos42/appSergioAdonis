@@ -79,6 +79,10 @@ class ImovelController {
   async destroy ({ params, response }) {
     
     const imovel = await Imovel.findOrFail(params.id);
+
+    if(imovel.user_id !== auth.user.id){
+      return response.send({error: 'voce nao tem autorizacao'})
+    }
     
     await imovel.delete();
   }
