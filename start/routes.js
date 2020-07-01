@@ -19,10 +19,11 @@ const { route } = require('@adonisjs/framework/src/Route/Manager')
 const Route = use('Route')
 
 Route.get('/', () => {
-  return { greeting: 'Pagina Home' }
+  return { greeting: 'Pagina Home!!' }
 });
 
 Route.post('/usuarios', 'UserController.create');
+
 Route.post('/token', 'SessionController.create');
 
 Route.resource('/imoveis', 'ImovelController').apiOnly();
