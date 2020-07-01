@@ -40,10 +40,14 @@ class ImovelController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, response, auth }) {
 
-    const dadoos = request.all();
-
+    const {id} = auth.user_id;
+    const data = request.only(['descricao','endereco','valor','latitude','longitude']);
+    
+    const imovel = await Imovel.create({...data, user_id: id});
+    
+    return imovel
   }
 
   /**
@@ -58,7 +62,11 @@ class ImovelController {
   async show ({ params }) {
 
     const imovel = await Imovel.findOrFail(params.id);
-
+    const data = request.only(['descricao','endereco','valor','latitude','longitude']);
+    
+    imovel.merge(data);
+    await imovel.save();
+    
     return imovel;
   }
 
@@ -72,6 +80,13 @@ class ImovelController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+
+    const imovel = await Imovel.findOrFail(params.id);
+
+
+
+    return imovel
+
   }
 
   /**
@@ -82,7 +97,7 @@ class ImovelController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, response }) {
+  async destroy ({ params, response, auth }) {
     
     const imovel = await Imovel.findOrFail(params.id);
 
