@@ -1,9 +1,24 @@
 'use strict'
 
+const { query } = require('@adonisjs/lucid/src/Lucid/Model');
+
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
 class Imovel extends Model {
+
+    static scopeProximidade(query, latitude, longitude, distancia){
+        
+        const haversine = `(6371 * acos(cos(raduans(${latitude}))
+                            * cos(radians(${latitude}))
+                            * cos(radians(${longitude})
+                            - radians(${longitude}))
+                            + sin(radians(${latitude}))
+                            * sin(radians(${latitude}))))`;
+
+        return query.select('*', Database.raw(`${haversine} as distancia`))
+                    .whereRaw(`${haversine} < ${distancia}`);
+    }
 
     user(){
         return this.belongsTo('App/Models/User');

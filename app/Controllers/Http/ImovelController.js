@@ -21,9 +21,12 @@ class ImovelController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index () {
+  async index ({request}) {
     
-    const imoveis = await Imovel.all();
+    const {latitude, longitude} = request.all();
+
+
+    const imoveis = await Imovel.query().Proximidade(latitude, longitude, 15).fetch();
 
     return imoveis;
   }
@@ -38,6 +41,9 @@ class ImovelController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+
+    const dadoos = request.all();
+
   }
 
   /**
