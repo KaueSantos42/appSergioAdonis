@@ -8,11 +8,11 @@ class Imovel extends Model {
     user(){
         return this.belongsTo('App/Models/User');
     }
-    /*
+    
     fotos(){
-        return this.hasMany('App/Models/Foto');
+        return this.hasMany('App/Models/Imagem');
     } 
-    */
+
 
 }
 
