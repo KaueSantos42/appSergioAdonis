@@ -1,12 +1,12 @@
 'use strict'
 
-const Imovel = require('../../Models/Imovel')
+const Imovel = use('App/Models/Imovel')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Imovel = use('App/Models/Imovel')
+
 
 /**
  * Resourceful controller for interacting with imovels
@@ -45,7 +45,9 @@ class ImovelController {
     const {id} = auth.user_id;
     const data = request.only(['descricao','endereco','valor','latitude','longitude']);
     
-    const imovel = await Imovel.create({...data, user_id: id});
+    data.user_id=auth.user_id;
+
+    const imovel = await Imovel.create(data);
     
     return imovel
   }
@@ -66,7 +68,7 @@ class ImovelController {
     
     imovel.merge(data);
     await imovel.save();
-    
+
     return imovel;
   }
 

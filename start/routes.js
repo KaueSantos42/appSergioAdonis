@@ -26,4 +26,5 @@ Route.post('/usuarios', 'UserController.create');
 
 Route.post('/token', 'SessionController.create');
 
-Route.resource('/imoveis', 'ImovelController').apiOnly();
+Route.resource('/imoveis', 'ImovelController').apiOnly().middleware('auth');
+
