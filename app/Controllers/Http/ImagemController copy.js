@@ -39,30 +39,7 @@ class ImagemController {
 
     return response.download(Helpers.tmpPath(`upload/${params.caminho}`));
   }
-
-
-  async update ({ params, request, response }) {
-
-    const imovel = await Imovel.findOrFail(params.id);
-    const data = request.only(['descricao','endereco','valor','latitude','longitude']);
-    
-    imovel.merge(data);
-    await imovel.save();
-    
-    return imovel;
-  }
-
   
-  async destroy ({ params, response, auth }) {
-    
-    const imovel = await Imovel.findOrFail(params.id);
-
-    if(imovel.user_id !== auth.user.id){
-      return response.status(401).send({error: 'voce nao tem autorizacao!'})
-    }
-    
-    await imovel.delete();
-  }
 }
 
 module.exports = ImovelController
